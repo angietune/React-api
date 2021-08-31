@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
 const Searchbar = () => {
-    const [query, setQuery] = useState('')
+    const [query, setQuery] = useState('');
+    const [pics, setPics] = useState([]);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setQuery(e.target.value)
-        console.log(query)
     }
 
     const accesskey = '54aaba10eb5f2aa6e77f7549526e8b8d';
@@ -17,7 +17,7 @@ const Searchbar = () => {
         sort: 'interestingness-desc',
         per_page: '12',
         license: '4',
-        extras: 'owner_name,license',
+        extras: 'url_m',
         format: 'json',
         nojsoncallback: '1',
     }
@@ -25,25 +25,40 @@ const Searchbar = () => {
     const parameters = new URLSearchParams(flickrData);
 
     const flickrUrl = `https://api.flickr.com/services/rest/?${parameters}`;
-    console.log(flickrUrl)
 
     const searchPhotos = (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
         fetch(flickrUrl)
         .then(response => {return response.json()})
         .then((data) => {
-            console.log(data.photos.photo)
+            setPics(data.photos.photo)
         })
     }
 
     return (
-        <form className="search-form">
+        <div>
+            <form className="search-form">
             <input type="text"
                 onChange={handleChange}
                 value={query}
             />
             <button onClick={searchPhotos}>Search</button>
-        </form>
+            </form>
+            <div className="result">
+            {
+            pics.map((pic, i) =>
+                <div className="card" key={i}>
+                    <img
+                        className="card-image"
+                        alt={pic}
+                        src={"https://farm" + pic.farm + ".staticflickr.com/" +  pic.server + "/" + pic.id + "_" + pic.secret + "_b.jpg"}
+                        width="50%"
+                        height="50%"
+                    ></img>
+                </div>)
+            }
+            </div>
+        </div>
     )
 }
 
