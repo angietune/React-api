@@ -5,7 +5,7 @@ const App = () => {
 
     return (
       <div>
-        <h1>Flickr search service</h1>
+        <h1>Flickr search images</h1>
         <Searchbar />
       </div>
     );

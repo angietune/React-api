@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import '../styles.scss'
 
 const Searchbar = () => {
     const [query, setQuery] = useState('');
@@ -38,11 +39,12 @@ const Searchbar = () => {
     return (
         <div>
             <form className="search-form">
-            <input type="text"
+            <input className="input" type="text"
                 onChange={handleChange}
                 value={query}
+                placeholder="Enter some keywords"
             />
-            <button onClick={searchPhotos}>Search</button>
+            <button className="button" onClick={searchPhotos}>Search</button>
             </form>
             <div className="result">
             {
