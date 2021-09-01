@@ -1,3 +1,7 @@
+.body {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
 .form {
     display: grid;
 }
@@ -6,10 +10,10 @@
     font-size: 1rem;
     padding: 0.5rem 2rem;
     line-height: 1rem;
-    border-radius: 10px;
+    border-radius: 10px 0 0 10px;
     background-color: white;
     margin-bottom: 1rem;
-    margin-right: 1rem;
+    // margin-right: 1rem;
 }
 
 .button {
@@ -17,7 +21,7 @@
     color: white;
     padding: 0.6rem 2rem;
     border: 1px solid rgba(0, 0, 0, 0.75);
-    border-radius: 10px;
+    border-radius: 0 10px 10px 0;
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 250ms;
@@ -40,4 +44,54 @@
     flex: 100%;
     margin-top: 1rem;
     border-radius: 10px;
+}
+
+.info-list {
+    display: flex;
+    justify-content: space-between;
+}
+
+ul {
+    border:0; margin:0; padding:0;
+}
+
+#pagination-flickr li {
+    border:0; margin:0; padding:0;
+    font-size:11px;
+    list-style:none;
+}
+#pagination-flickr a {
+    border:solid 1px #DDDDDD;
+    margin-right:2px;
+}
+#pagination-flickr .previous-off,
+#pagination-flickr .next-off {
+    color:#666666;
+    display:block;
+    float:left;
+    font-weight:bold;
+    padding:3px 4px;
+}
+#pagination-flickr .next a,
+#pagination-flickr .previous a {
+    font-weight:bold;
+    border:solid 1px #FFFFFF;
+}
+#pagination-flickr .active{
+    color:#ff0084;
+    font-weight:bold;
+    display:block;
+    float:left;
+    padding:4px 6px;
+}
+#pagination-flickr a:link,
+#pagination-flickr a:visited {
+    color:#0063e3;
+    display:block;
+    float:left;
+    padding:3px 6px;
+    text-decoration:none;
+}
+#pagination-flickr a:hover{
+    border:solid 1px #666666;
 }

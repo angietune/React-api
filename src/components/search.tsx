@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import '../styles.scss'
+import Result from "./result";
 
 const Searchbar = () => {
     const [query, setQuery] = useState('');
     const [pics, setPics] = useState([]);
+    const [pages, setPages] = useState(0);
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setQuery(e.target.value)
@@ -23,18 +26,22 @@ const Searchbar = () => {
         nojsoncallback: '1',
     }
 
-    const parameters = new URLSearchParams(flickrData);
+    const parameters = new URLSearchParams(flickrData)
 
-    const flickrUrl = `https://api.flickr.com/services/rest/?${parameters}`;
+    const flickrUrl = `https://api.flickr.com/services/rest/?${parameters}`
 
     const searchPhotos = (e: React.MouseEvent<HTMLElement>) => {
-        e.preventDefault();
+        e.preventDefault()
+        setLoading(true)
         fetch(flickrUrl)
         .then(response => {return response.json()})
         .then((data) => {
             setPics(data.photos.photo)
+            setPages(data.photos.pages)
         })
+        setLoading(false)
     }
+
 
     return (
         <div>
@@ -46,20 +53,12 @@ const Searchbar = () => {
             />
             <button className="button" onClick={searchPhotos}>Search</button>
             </form>
-            <div className="result">
-            {
-            pics.map((pic, i) =>
-                <div className="card" key={i}>
-                    <img
-                        className="card-image"
-                        alt={pic}
-                        src={"https://farm" + pic.farm + ".staticflickr.com/" +  pic.server + "/" + pic.id + "_" + pic.secret + "_b.jpg"}
-                        width="50%"
-                        height="50%"
-                    ></img>
-                </div>)
-            }
+            <div className="info-list">
+                <div>
+                    <p>Total results: {pages}</p>
+                </div>
             </div>
+            <Result pics={pics} loading={loading}/>
         </div>
     )
 }
