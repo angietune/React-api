@@ -1,7 +1,0 @@
-{
-    "extends": ["airbnb", "prettier/react"],
-    "plugins": ["prettier"],
-    "rules": {
-      "prettier/prettier": ["error"]
-    }
-  }
