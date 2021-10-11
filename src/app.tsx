@@ -1,15 +1,13 @@
-import React from "react";
-import Searchbar from "./components/search";
-import './styles.scss'
+import React from 'react';
+import './styles.scss';
+import Header from './components/Header';
 
 const App = () => {
-
     return (
-      <div>
-        <h1 className="title">Flickr search images</h1>
-        <Searchbar />
-      </div>
+        <div>
+            <Header />
+        </div>
     );
-  };
-  
-  export default App;
+};
+
+export default App;
