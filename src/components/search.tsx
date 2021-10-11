@@ -32,16 +32,16 @@ const Searchbar = () => {
 
     const searchPhotos = async (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
-        setLoading(true);
         fetch(flickrUrl)
             .then((response) => {
+                setLoading(true);
                 return response.json();
             })
             .then((data) => {
+                setLoading(false);
                 setPics(data.photos.photo);
                 setPages(data.photos.pages);
             });
-        setLoading(false);
     };
 
     return (
