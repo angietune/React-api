@@ -25,9 +25,7 @@ const Details = () => {
             setInfo(xmlDoc.querySelector('title').innerHTML);
         });
 
-    //farm5.staticflickr.com/4379/35972944760_2ce8036d09_b.jpg
-
-    https: return (
+    return (
         <div className="details">
             <h3>{info}</h3>
 

@@ -1,5 +1,6 @@
 import React from 'react';
-import Searchbar from '../components/search';
+import Options from '../components/options';
+import Searchbar from '../components/SearchBar';
 
 const Home = () => {
     return (
