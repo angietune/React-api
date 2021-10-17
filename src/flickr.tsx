@@ -14,3 +14,5 @@ export const flickrData = {
 const parameters = new URLSearchParams(flickrData);
 
 const flickrUrl = `https://api.flickr.com/services/rest/?${parameters}`;
+
+export default flickrData;
