@@ -1,41 +1,50 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import flickrData from '../interfaces.js';
+import { RootState } from '../store';
+import Options from './options';
+import flickrUrl from '../interfaces';
 
-interface Props {
-    pics: flickrData[];
-    loading: boolean;
-}
+const Result = () => {
+    const status = useSelector((state: RootState) => state.fetchUrl.status);
+    const pics = useSelector((state: RootState) => state.fetchUrl.pics);
 
-const Result = ({ pics, loading }: Props) => {
     return (
         <div className="result">
-            {loading ? (
-                <h2>Loading...</h2>
+            <Options />
+            {status === 'loading' ? (
+                <div>Loading...</div>
             ) : (
-                pics.map((pic: any, i: number) => (
-                    <Link to={`/details/${pic.farm}-${pic.server}-${pic.id}-${pic.secret}`} key={i}>
+                pics.map((pic: flickrUrl) => {
+                    <>
+                        <div>loaded</div>
+                        <Link to={`/details/${pic.farm}-${pic.server}-${pic.id}-${pic.secret}`} key={pic.id}>
+                            <div className="card">
+                                <img
+                                    className="card-image"
+                                    alt={'photo'}
+                                    src={pic.url_m}
+                                    width="50%"
+                                    height="50%"
+                                ></img>
+                                <div>{pic.url_m}</div>
+                            </div>
+                        </Link>
+                        ;
+                    </>;
+                })
+            )}
+            {status === 'resolved' ? (
+                pics.map((pic: flickrUrl) => {
+                    <Link to={`/details/${pic.farm}-${pic.server}-${pic.id}-${pic.secret}`} key={pic.id}>
                         <div className="card">
-                            <img
-                                className="card-image"
-                                alt={pic}
-                                src={
-                                    'https://farm' +
-                                    pic.farm +
-                                    '.staticflickr.com/' +
-                                    pic.server +
-                                    '/' +
-                                    pic.id +
-                                    '_' +
-                                    pic.secret +
-                                    '_b.jpg'
-                                }
-                                width="50%"
-                                height="50%"
-                            ></img>
+                            <img className="card-image" alt={'photo'} src={pic.url_m} width="50%" height="50%"></img>
+                            <div>{pic.url_m}</div>
                         </div>
-                    </Link>
-                ))
+                    </Link>;
+                })
+            ) : (
+                <div>No results...</div>
             )}
         </div>
     );
