@@ -1,10 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
 import fetchSlice from './features/fetchSlice';
-import querySlice from './features/querySlice';
 
 export const store = configureStore({
     reducer: {
-        query: querySlice,
         fetchUrl: fetchSlice,
     },
 });
