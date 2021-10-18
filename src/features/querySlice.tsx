@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import flickrUrl from '../interfaces';
+import { flickrUrl } from '../interfaces';
 import { accesskey } from '../flickr';
 
 const initialState: flickrUrl = {

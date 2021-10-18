@@ -1,10 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import flickrUrl from '../interfaces';
+import { flickrData, flickrUrl } from '../interfaces';
 import { accesskey } from '../flickr';
 
 export interface ResultState {
     text: string;
-    pics: [];
+    pics: flickrData[];
     status: string;
     error: string;
 }
@@ -16,7 +16,7 @@ const initialState: ResultState = {
     error: null,
 };
 
-export const flickrData = {
+export const flickrDataUrl = {
     method: 'flickr.photos.search',
     api_key: accesskey,
     sort: 'interestingness-desc',
@@ -30,15 +30,13 @@ export const flickrData = {
     url_m: '',
 };
 
-const parameters = new URLSearchParams(flickrData);
+const parameters = new URLSearchParams(flickrDataUrl);
 
 const flickrUrl = `https://api.flickr.com/services/rest/?${parameters}`;
 
 export const fetchQuery = createAsyncThunk('pics/fetchQuery', async function () {
     const response = await fetch(flickrUrl);
     const data = await response.json();
-    console.log(data.photos.photo);
-
     return data.photos.photo;
 });
 
@@ -58,6 +56,7 @@ export const fetchSlice = createSlice({
             builder.addCase(fetchQuery.fulfilled, (state, action) => {
                 state.status = 'resolved';
                 state.pics = action.payload;
+                console.log(action);
             }),
             builder.addCase(fetchQuery.rejected, (state, action) => {});
     },

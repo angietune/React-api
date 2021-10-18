@@ -1,51 +1,20 @@
-import React, { useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import { RootState } from '../store';
+import '../styles.scss';
 
 const Details = () => {
+    const pics = useSelector((state: RootState) => state.fetchUrl.pics);
     const location = useLocation();
-    const { id }: { id: string } = useParams();
-    const [info, setInfo] = useState('');
-
-    console.log(location.pathname);
-    const url = location.pathname.split('-');
-    const urlFarm = url[0].charAt(9);
-    const urlServer = url[1];
-    const urlID = url[2];
-    const urlSecret = url[3];
-
-    const accesskey = '54aaba10eb5f2aa6e77f7549526e8b8d';
-
-    const flickrUrl = `https://api.flickr.com/services/rest/?method=flickr.photos.getInfo&photo_id=${urlID}&api_key=${accesskey}`;
-
-    fetch(flickrUrl)
-        .then((data) => data.text())
-        .then((data) => {
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(data, 'text/xml');
-            setInfo(xmlDoc.querySelector('title').innerHTML);
-        });
+    const id = location.pathname.substring(9);
+    const detailedPic = pics.find((item) => item.id === id);
 
     return (
         <div className="details">
-            <h3>{info}</h3>
-
-            <img
-                className="card-image"
-                alt="pic"
-                src={
-                    'https://farm' +
-                    urlFarm +
-                    '.staticflickr.com/' +
-                    urlServer +
-                    '/' +
-                    urlID +
-                    '_' +
-                    urlSecret +
-                    '_b.jpg'
-                }
-                width="50%"
-                height="50%"
-            />
+            <h3>{detailedPic.title}</h3>
+            <h4>Author: {detailedPic.owner}</h4>
+            <img className="card-image" alt="pic" src={detailedPic.url_m} width="50%" height="50%" />
         </div>
     );
 };

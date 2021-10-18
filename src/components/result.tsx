@@ -1,20 +1,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { flickrData } from '../features/fetchSlice';
+import { flickrData } from '../interfaces';
 
-const Result = ({ pics }: any) => {
-    console.log(pics[0].url_m);
+const Result = (pics: flickrData[]) => {
     return (
         <div className="result">
-            {pics !== null
-                ? pics.map((pic: any) => {
-                      <Link to={`/details/${pic.id}`} key={pic.id}>
-                          <div className="card">
-                              <img className="card-image" alt={'photo'} src={pic.url_m} width="50%" height="50%"></img>
-                          </div>
-                      </Link>;
-                  })
-                : null}
+            {pics !== null ? (
+                Object.values(pics).map((pic) => {
+                    return (
+                        <Link to={`/details/${pic.id}`} key={pic.id}>
+                            <div className="card">
+                                <img
+                                    className="card-image"
+                                    alt={'photo'}
+                                    src={pic.url_m}
+                                    width="50%"
+                                    height="50%"
+                                ></img>
+                            </div>
+                        </Link>
+                    );
+                })
+            ) : (
+                <div>No images</div>
+            )}
         </div>
     );
 };
