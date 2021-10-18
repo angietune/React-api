@@ -12,16 +12,19 @@ const SearchBar = () => {
     const dispatch = useDispatch();
     const status = useSelector((state: RootState) => state.fetchUrl.status);
     const pics = useSelector((state: RootState) => state.fetchUrl.pics);
+    const url = useSelector((state: RootState) => state.fetchUrl.flickrDataUrl);
+    const parameters = new URLSearchParams(url);
+    const flickrUrl = `https://api.flickr.com/services/rest/?${parameters}`;
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         setValue(e.target.value);
+        dispatch(text(value));
     };
 
     const handleClick = (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
-        dispatch(text(value));
         setValue('');
-        dispatch(fetchQuery());
+        dispatch(fetchQuery(flickrUrl));
     };
 
     return (
